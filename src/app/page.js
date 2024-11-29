@@ -14,15 +14,19 @@ export default function Home() {
 
       <section class="services">
         <div class="service-card">
-          <a href="formulariopag1.html">
-            <button class="btn-service">TRAMITA TU CIUDADANÍA</button>
-          </a>
+        <li>
+  <Link href="FormularioVisas" className="btn-service">
+    TRAMITA TU CIUDADANÍA
+  </Link>
+</li>
           <p>Ciudadanías de todo el mundo</p>
         </div>
         <div class="service-card">
-          <a href="formulariopag1.html">
-            <button class="btn-service">TRAMITA TU VISA</button>
-          </a>
+        <li>
+  <Link href="FormularioVisas" className="btn-service">
+    TRAMITA TU CIUDADANÍA
+  </Link>
+</li>
           <p>Visas de todo tipo para tus necesidades</p>
         </div>
       </section>
