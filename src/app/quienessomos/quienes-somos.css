@@ -1,0 +1,61 @@
+.hero {
+    background-color: #0e0d0d54;
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #ffffff;
+    height: auto;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2em;
+    opacity: 0.7;
+}
+
+.team {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background-color: #fff;
+}
+
+.member {
+    width: 250px;
+    text-align: center;
+}
+
+.member img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.member h2 {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+.member p {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.about {
+    width: 250px;
+}
+
+.about h2 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.about p {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 10px;
+}
