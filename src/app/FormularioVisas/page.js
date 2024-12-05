@@ -1,6 +1,19 @@
+'use client'
+
 import './formulariovisas.css';
+//import supabase from '../config/supabaseClient';
 
 export default function FormularioVisas() {
+    const enviarForm = (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+
+        // Do a bit of work to convert the entries to a plain JS object
+        const value = Object.fromEntries(data.entries());
+
+        console.log(value);
+    };
+
     return (
         <>
             <main>
@@ -10,7 +23,7 @@ export default function FormularioVisas() {
 
                 <section className="form-container">
                     <h2>Llena el formulario con tus datos</h2>
-                    <form action="submit_form.html" method="POST">
+                    <form onSubmit={enviarForm}>
                         {/* Información básica */}
                         <div className="form-row">
                             <label htmlFor="nombre">Nombre</label>
