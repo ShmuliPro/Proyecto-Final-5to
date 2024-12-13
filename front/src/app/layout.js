@@ -15,10 +15,10 @@ export default function RootLayout({ children }) {
             </div>
             <ul className="nav-links">
               <li><Link href="/">Home </Link></li>
-              <li><Link href="servicios">Servicios</Link></li>
-              <li><Link href="quienessomos">Quiénes somos?</Link></li>
-              <li><Link href="contacto">Contacto</Link></li>
-              <li><Link href="tramitesinfo">Trámites info</Link></li>
+              <li><Link href="/servicios">Servicios</Link></li>
+              <li><Link href="/quienessomos">Quiénes somos?</Link></li>
+              <li><Link href="/contacto">Contacto</Link></li>
+              <li><Link href="/tramitesinfo">Trámites info</Link></li>
             </ul>
             <div className="profile">
               <Image src={profilePic} alt="Perfil" className="profile-pic" />

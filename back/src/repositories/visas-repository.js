@@ -34,146 +34,28 @@ export default class VisasRepository {
         }
     }
 
-    /*getByIdAsync = async (id) => {
+    getByIdAsync = async (id) => {
         const client = new Client(config);
         await client.connect();
 
         try {
-            let sql = `
-            SELECT 
-                e.id, e.name, e.description, e.id_event_category, 
-                e.id_event_location, e.start_date, e.duration_in_minutes, 
-                e.price, e.enabled_for_enrollment, e.max_assistance, 
-                e.id_creator_user,
-                el.id AS event_location_id, el.id_location, el.name AS location_name, 
-                el.full_address, el.max_capacity, el.latitude AS location_latitude, 
-                el.longitude AS location_longitude,
-                l.id AS location_id, l.name AS location_name, l.id_province, 
-                l.latitude AS province_latitude, l.longitude AS province_longitude,
-                p.id AS province_id, p.name AS province_name, p.full_name AS province_full_name,
-                u.id AS creator_user_id, u.first_name AS creator_first_name, 
-                u.last_name AS creator_last_name, u.username AS creator_username, 
-                u.password AS creator_password,
-                ec.id AS event_category_id, ec.name AS event_category_name, 
-                ec.display_order AS event_category_display_order
-            FROM 
-                events AS e
-            left JOIN 
-                event_locations AS el ON e.id_event_location = el.id
-            left JOIN 
-                locations AS l ON el.id_location = l.id
-            left JOIN 
-                provinces AS p ON l.id_province = p.id
-            left JOIN 
-                users AS u ON e.id_creator_user = u.id
-            left JOIN 
-                event_categories AS ec ON e.id_event_category = ec.id
-            WHERE 
-                e.id = $1`;
+            let sql = `SELECT * FROM visas WHERE id = $1`;
 
         const values = [id];
         const result = await client.query(sql, values);
-        const eventData = result.rows[0];
-
-            if (!eventData) {
-                return null;
-            }
-
-            const event = {
-                id: eventData.id,
-                name: eventData.name,
-                description: eventData.description,
-                id_event_category: eventData.id_event_category,
-                id_event_location: eventData.id_event_location,
-                start_date: eventData.start_date,
-                duration_in_minutes: eventData.duration_in_minutes,
-                price: eventData.price,
-                enabled_for_enrollment: eventData.enabled_for_enrollment,
-                max_assistance: eventData.max_assistance,
-                creator_user: {
-                    id: eventData.creator_user_id,
-                    first_name: eventData.creator_first_name,
-                    last_name: eventData.creator_last_name,
-                    username: eventData.creator_username,
-                    password: eventData.creator_password,
-                },
-                event_location: {
-                    id: eventData.event_location_id,
-                    id_location: eventData.id_location,
-                    name: eventData.location_name,
-                    full_address: eventData.full_address,
-                    max_capacity: eventData.max_capacity,
-                    latitude: eventData.location_latitude,
-                    longitude: eventData.location_longitude,
-                    location: {
-                        id: eventData.location_id,
-                        name: eventData.location_name,
-                        id_province: eventData.id_province,
-                        latitude: eventData.province_latitude,
-                        longitude: eventData.province_longitude,
-                        province: {
-                            id: eventData.province_id,
-                            name: eventData.province_name,
-                            full_name: eventData.province_full_name,
-                        },
-                    },
-                },
-                event_category: {
-                    id: eventData.event_category_id,
-                    name: eventData.event_category_name,
-                    display_order: eventData.event_category_display_order,
-                },
-            };
-
-            return event;
+        const visa = result.rows[0];
+            return visa;
         } finally {
             await client.end();
         }
     };
 
-    createAsync = async (body, token) => {
-
-        let payloadOriginal = null;
-        try {
-            payloadOriginal = jwt.verify(token, secretKey);
-        } catch (error) {
-            console.error("Error verifying JWT:", error);
-            return ["Unauthorized", 401];
-        }
-
-        const getMaxCapacity = async (id_event_location) => {
-            const client = new Client(config);
-            await client.connect();
-            try {
-                const query = `
-              SELECT max_capacity
-              FROM event_locations
-              WHERE id = $1`;
-
-                const values = [id_event_location];
-                const result = await client.query(query, values);
-
-                if (result.rows.length > 0) {
-                    return result.rows[0].max_capacity;
-                } else {
-                    throw new Error(
-                        `Event location with ID ${id_event_location} not found`
-                    );
-                }
-            } catch (error) {
-                console.error("Error getting max capacity:", error);
-                throw error;
-            } finally {
-                await client.end();
-            }
-        };
+    createAsync = async (body) => {
 
         const client = new Client(config);
         await client.connect();
         try {
-            const { name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance } = body;
-
-            if (!name || !description || name.length < 3 || description.length < 3) {
+            /*if (!name || !description || name.length < 3 || description.length < 3) {
                 return ["Name and description must have at least 3 characters", 400];
             }
 
@@ -189,32 +71,29 @@ export default class VisasRepository {
 
             if (price < 0 || duration_in_minutes < 0) {
                 return ["Price and duration_in_minutes must be greater than or equal to 0", 400];
-            }
+            }*/
 
-            const id_creator_user = payloadOriginal.id;
-
-            const sql1 = `SELECT id FROM public.events ORDER BY id DESC limit 1;`;
-            const result1 = await client.query(sql1);
-            const lastEvent = result1.rows[0];
-            const newEventId = lastEvent ? lastEvent.id + 1 : 1;
-
-            const query = `
-          INSERT INTO events (name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user, id)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-      `;
+            const query = 'INSERT INTO visas (nombre, apellido, birth_date, pasaporte, passport_issue_date, lugar_emision, telefono, direccion, codigo_postal, email, social_media, social_platform, social_username, current_job, entidad_educativa, titulo_obtener, año) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)';
             const values = [
-                name,
-                description,
-                id_event_category,
-                id_event_location,
-                start_date,
-                duration_in_minutes,
-                price,
-                enabled_for_enrollment,
-                max_assistance,
-                id_creator_user,
-                newEventId,
+                body.nombre,
+                body.apellido,
+                body.birth_date,
+                body.pasaporte,
+                body.passport_issue_date,
+                body.lugar_emision,
+                body.telefono,
+                body.direccion,
+                body.codigo_postal,
+                body.email,
+                body.social_media === "true",
+                body.social_platform,
+                body.social_username,
+                body.current_job,
+                body.entidad_educativa,
+                body.titulo_obtener,
+                body.anio
             ];
+
             const result = await client.query(query, values);
 
             return ["created", 201];
@@ -225,6 +104,5 @@ export default class VisasRepository {
             await client.end();
         }
     };
-*/
 
 }

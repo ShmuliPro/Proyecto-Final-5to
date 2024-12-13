@@ -3,10 +3,10 @@
 import axios from 'axios';
 import './tramitesinfo.css';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Tramitesinfo() {
     const [visas, setVisas] = useState([]);
-    debugger;
 
     useEffect(() => {
         axios.get('http://localhost:4000/api/visas').then((response) => {
@@ -36,7 +36,7 @@ export default function Tramitesinfo() {
                                     <td>VISA USA</td>
                                     <td>Transferencia bancaria</td>
                                     <td>{v.passport_issue_date}</td>
-                                    <td>En proceso <a href="tramite-info.html">VER INFO</a></td>
+                                    <td>En proceso <Link href={'detalle/' + v.id}>VER INFO</Link></td>
                                 </tr>)
                             }
                             

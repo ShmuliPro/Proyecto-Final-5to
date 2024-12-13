@@ -15,13 +15,11 @@ export default class VisasService {
     return resArray;
   }
 
-  /*
-
   getByIdAsync = async (id) => {
       const repo = new VisasRepository();
-      const arrayEventos = await repogetByIdAsync(id);
+      const arrayEventos = await repo.getByIdAsync(id);
       console.log(arrayEventos)
-          if (arrayEventos && Object.keys(arrayEventos).length !== 0) {
+      if (arrayEventos && Object.keys(arrayEventos).length !== 0) {
           return [arrayEventos, 200];
       } else {
           return ["Evento no encontrado", 404];
@@ -34,5 +32,4 @@ export default class VisasService {
     return resArray;
   }
 
-  */
 }

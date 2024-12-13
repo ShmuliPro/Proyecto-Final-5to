@@ -20,8 +20,9 @@ router.get('/:id', async(req, res) => {
 
 router.post('', async(req, res) => {
     const body = req.body;
-    const token = req.headers.authorization && req.headers.authorization.split(' ')[1]; 
-    const resArray = await svc.createAsync(body,token);
+    console.log(body);
+    //const token = req.headers.authorization && req.headers.authorization.split(' ')[1]; 
+    const resArray = await svc.createAsync(body);
     res.status(resArray[1]).send(resArray[0]);
 });
 
